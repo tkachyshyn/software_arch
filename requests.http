@@ -1,0 +1,16 @@
+GET http://localhost:5000/
+Accept: text/html
+
+###
+
+POST http://localhost:5000/
+Content-type: application/json
+
+"msg1"
+
+###
+
+POST http://localhost:5000/
+Content-type: application/json
+
+"msg2"
