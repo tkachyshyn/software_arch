@@ -1,13 +1,10 @@
 from flask import Flask
 
-
 app = Flask(__name__)
-host_name = "localhost"
-host_port = 5002
 
-@app.get("/")
+@app.route('/', methods=['GET'])
 def do_GET():
-    return 'message'
+    return "not implemented yet", 200
 
-if __name__ == "__main__":
-    app.run(host_name, host_port)
+if __name__ == '__main__':
+    app.run(port=5002)
