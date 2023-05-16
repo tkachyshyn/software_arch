@@ -1,27 +1,47 @@
-import requests
-import uuid
 from flask import Flask, request
-
+import requests, uuid
 
 app = Flask(__name__)
 
-host_name = "localhost"
-host_port = 5000
-logging_client = "http://localhost:5001"
-messages_client = "http://localhost:5002"
+logging_service_url = "http://localhost:5001"
+messages_service_url = "http://localhost:5002"
 
-@app.get("/")
+messages = {}
+
+
+@app.route('/', methods=['GET'])
 def do_GET():
-    try:
-        return f'{requests.get(logging_client).text} | {requests.get(messages_client).text}'
-    except requests.exceptions.ConnectionError:
-        return "Connection refused"
+    response = {}
+    logging_response = requests.get(logging_service_url)
+    messages_response = requests.get(messages_service_url)
 
-@app.post("/")
+    if logging_response.status_code == 200:
+        response['logging_service'] = logging_response.json()
+
+    if messages_response.status_code == 200:
+        response['messages_service'] = messages_response.json()
+
+    return response, 200
+
+
+@app.route('/', methods=['POST'])
 def do_POST():
+    msg = request.get_json()
+    if msg:
+        msg_id = generate_uuid()
+        messages[msg_id] = msg
 
-    return requests.post(logging_client, {'id': uuid.uuid4(), 'text': request.get_json()}).text
+        logging_response = requests.post(logging_service_url, json={'id': msg_id, 'message': msg})
+
+        if logging_response.status_code == 201:
+            return "Message received and logged.", 201
+
+    return "Invalid message.", 400
+
+
+def generate_uuid():
+    return str(uuid.uuid4())
 
 
 if __name__ == '__main__':
-    app.run(host_name, host_port, debug=True)
+    app.run(port=5000)
