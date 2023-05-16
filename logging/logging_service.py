@@ -1,20 +1,27 @@
-from flask import Flask, request
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-host_name = "localhost"
-host_port = 5001
-messages = dict()
 
-@app.get("/")
+messages = {}
+
+
+@app.route('/', methods=['GET'])
 def do_GET():
-    return str(list(messages.items()))
+    return jsonify(messages), 200
 
-@app.post("/")
+
+@app.route('/', methods=['POST'])
 def do_POST():
-    uid = request.form['id']
-    print(uid)
-    messages[uid] = request.form['text']
-    return ''
+    data = request.get_json()
+    if data and 'id' in data and 'message' in data:
+        msg_id = data['id']
+        msg = data['message']
+        messages[msg_id] = msg
+        print(f"Received message: {msg_id} - {msg}")
+        return "Message logged.", 201
+
+    return "Invalid request.", 400
+
 
 if __name__ == '__main__':
-    app.run(host_name, host_port)
+    app.run(port=5001)
