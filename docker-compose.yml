@@ -1,0 +1,63 @@
+version: "3"
+
+networks:
+  apz:
+    driver: bridge
+
+services:
+  facade-service:
+    build:
+      context: ./facade
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - apz
+  logging-service1:
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    networks:
+      - apz
+  logging-service2:
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    networks:
+      - apz
+  logging-service3:
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    networks:
+      - apz
+  messages-service1:
+    build:
+      context: ./messages
+      dockerfile: Dockerfile
+    networks:
+      - apz
+  messages-service2:
+    build:
+      context: ./messages
+      dockerfile: Dockerfile
+    networks:
+      - apz
+  hazelcast1:
+    image: hazelcast/hazelcast
+    networks:
+      - apz
+  hazelcast2:
+    image: hazelcast/hazelcast
+    networks:
+      - apz
+  hazelcast3:
+    image: hazelcast/hazelcast
+    networks:
+      - apz
+  mc:
+    image: hazelcast/management-center
+    networks:
+      - apz
+    ports:
+      - "8081:8080"
