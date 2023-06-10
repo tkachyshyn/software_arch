@@ -1,0 +1,91 @@
+POST  http://localhost:8081/log
+Content-Type: application/json
+
+{
+  "msg": "message1"
+}
+
+###
+POST http://localhost:8081/logging
+Content-Type: application/json
+
+
+{
+  "msg": "message2"
+}
+
+###
+POST http://localhost:8081/logging
+Content-Type: application/json
+
+
+{
+  "msg": "message3"
+}
+
+###
+POST http://localhost:8081/log
+Content-Type: application/json
+
+
+{
+  "msg": "message4"
+}
+
+###
+POST http://localhost:8081/log
+Content-Type: application/json
+
+
+{
+  "msg": "message5"
+}
+
+###
+POST http://localhost:8081/log
+Content-Type: application/json
+
+
+{
+  "msg": "message6"
+}
+
+###
+POST http://localhost:8081/log
+Content-Type: application/json
+
+
+{
+  "msg": "message7"
+}
+
+###
+POST http://localhost:8081/log
+Content-Type: application/json
+
+
+{
+  "msg": "message8"
+}
+
+###
+POST http://localhost:8081/log
+Content-Type: application/json
+
+
+{
+  "msg": "message9"
+}
+
+###
+POST http://localhost:8081/log
+Content-Type: application/json
+
+
+{
+  "msg": "message10"
+}
+
+###
+GET http://localhost:8081/log
+Accept: text/plain
