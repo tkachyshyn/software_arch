@@ -1,0 +1,64 @@
+version: "3"
+
+networks:
+  swarch:
+    driver: bridge
+
+services:
+  facade-service:
+    build:
+      context: ./facade
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - swarch
+  logging-service1:
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    networks:
+      - swarch
+  logging-service2:
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    networks:
+      - swarch
+  logging-service3:
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    networks:
+      - swarch
+  messages-service:
+    build:
+      context: ./messages
+      dockerfile: Dockerfile
+    networks:
+      - swarch
+  hazelcast1:
+    image: hazelcast/hazelcast
+    networks:
+      - swarch
+  hazelcast2:
+    image: hazelcast/hazelcast
+    networks:
+      - swarch
+  hazelcast3:
+    image: hazelcast/hazelcast
+    networks:
+      - swarch
+  mc:
+    image: hazelcast/management-center
+    networks:
+      - swarch
+    ports:
+      - "8081:8080"
+
+#  share:
+#
+#    environment:
+#      REPO_PORT: "8080"
+#      CSRF_FILTER_REFERER: "http<% if (https == 'true') { %>s<%}%>://<%=serverName%>:<%=port%>/.*"
+#      CSRF_FILTER_ORIGIN: "http<% if (https == 'true') { %>s<%}%>://<%=serverName%>:<%=port%>"
